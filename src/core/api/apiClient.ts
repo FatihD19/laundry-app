@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getStoredToken } from '../utils/storage';
 
 
-const BASE_URL = 'https://8819-182-253-183-4.ngrok-free.app/api/v1'; // Ganti dengan URL_PATH sesuai kebutuhan
+const BASE_URL = 'https://b0a5-182-253-183-14.ngrok-free.app/api/v1';
 
 const apiClient = axios.create({
     baseURL: BASE_URL,

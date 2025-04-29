@@ -42,10 +42,12 @@ const CustomerScreen: React.FC = () => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Customer List</Text>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Customer</Text>
+      </View>
       {items.length > 0 ? (
         <FlatList
-          style={{ width: "100%" }}
+          style={{ width: "100%", padding: 16 }}
           data={items}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <CustomerCard customer={item} />}
@@ -77,10 +79,24 @@ const CustomerScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    // justifyContent: "flex-start",
+    // alignItems: "center",
     backgroundColor: "#f5f5f5",
+    // padding: 16,
+  },
+  header: {
+    alignItems: "center",
     padding: 16,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 3,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   text: {
     fontSize: 20,
@@ -91,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#666",
   },
+
   customerItem: {
     marginBottom: 12,
     padding: 10,

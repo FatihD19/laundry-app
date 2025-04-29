@@ -1,11 +1,19 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { AppDispatch, RootState } from "../../../../core/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { getBills } from "../redux/billSlice";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 import AddButton from "../../../../core/components/AddButton";
+import BillsCard from "../components/BillsCard";
+import { logoutUser } from "../../../auth/presentation/redux/authslice";
 
 const TransactionScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -19,6 +27,10 @@ const TransactionScreen: React.FC = () => {
   useEffect(() => {
     dispatch(getBills());
   }, [dispatch]);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
 
   if (isLoading) {
     return (
@@ -39,10 +51,36 @@ const TransactionScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.userInfo}>
-        <Text style={styles.welcomeText}>Welcome,</Text>
-        <Text style={styles.username}>{username}</Text>
+        <View style={{ flex: 1, flexDirection: "column" }}>
+          <Text style={styles.welcomeText}>Welcome,</Text>
+          <Text style={styles.username}>{username}</Text>
+        </View>
+        <TouchableOpacity
+          style={{
+            marginLeft: 20,
+            alignSelf: "center",
+            backgroundColor: "#ff3b30",
+            paddingVertical: 8,
+            paddingHorizontal: 16,
+            borderRadius: 8,
+          }}
+          onPress={handleLogout}
+        >
+          <Text style={{ color: "white", fontWeight: "600" }}>Logout</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.infoCard}>
+      <FlatList
+        data={items}
+        renderItem={({ item }) => <BillsCard bill={item} />}
+        keyExtractor={(item) => item.id}
+        // contentContainerStyle={styles.listContent}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No transactions found</Text>
+          </View>
+        }
+      />
+      {/* <View style={styles.infoCard}>
         <Text style={styles.infoText}>Your Bills</Text>
         {items.length > 0 ? (
           items.map((bill, index) => (
@@ -63,7 +101,7 @@ const TransactionScreen: React.FC = () => {
         ) : (
           <Text style={styles.subText}>No bills available.</Text>
         )}
-      </View>
+      </View> */}
 
       {/* Floating Action Button */}
       <AddButton
@@ -81,7 +119,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   userInfo: {
-    marginBottom: 32,
+    marginTop: 14,
+    flexDirection: "row",
   },
   welcomeText: {
     fontSize: 18,
@@ -121,6 +160,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
   },
+  logoutText: {
+    color: "#ff3b30",
+    fontWeight: "600",
+  },
   fab: {
     position: "absolute",
     bottom: 20,
@@ -141,6 +184,20 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "white",
     fontWeight: "bold",
+  },
+  // listContent: {
+  //   padding: 10,
+  // },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 40,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#666",
+    fontStyle: "italic",
   },
 });
 

@@ -111,14 +111,14 @@ const BillDetailScreen: React.FC = () => {
           <Text style={styles.label}>Bill Date:</Text>
           <Text style={styles.value}>{formatDate(bill.billDate)}</Text>
         </View>
-        <View style={styles.infoRow}>
+        {/* <View style={styles.infoRow}>
           <Text style={styles.label}>Created:</Text>
           <Text style={styles.value}>{formatDate(bill.createdAt)}</Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.label}>Updated:</Text>
           <Text style={styles.value}>{formatDate(bill.updatedAt)}</Text>
-        </View>
+        </View> */}
       </View>
 
       {/* Customer Information */}

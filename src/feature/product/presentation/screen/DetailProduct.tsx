@@ -93,6 +93,9 @@ const DetailProduct: React.FC = () => {
   }
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>
+        {productId ? "Update Customer" : "Create Customer"}
+      </Text>
       <Text style={styles.label}>Name</Text>
       <TextInput style={styles.textField} value={name} onChangeText={setname} />
       <Text style={styles.label}>Price</Text>
@@ -125,6 +128,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: "white",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#333",
   },
   dropdown: {
     borderWidth: 1,
